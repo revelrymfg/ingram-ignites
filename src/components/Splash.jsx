@@ -6,11 +6,13 @@ export default function Splash({ onEnter }) {
       onClick={onEnter}
     >
       <div className="animate-fade-in flex flex-col items-center text-center">
-        {/* Ingram Micro wordmark */}
-        <h1 className="text-[42px] leading-tight mb-5" style={{ letterSpacing: '0.05em' }}>
-          <span className="text-white font-light">ingram </span>
-          <span className="text-white font-semibold">micro</span>
-        </h1>
+        {/* Ingram Micro logo */}
+        <img
+          src="/ingram-ignites/ingram-logo.png"
+          alt="Ingram Micro"
+          className="mb-5"
+          style={{ width: '220px', filter: 'brightness(0) invert(1)' }}
+        />
 
         {/* Divider + sub-brand */}
         <div className="w-10 border-t border-white/40 mb-4" />
