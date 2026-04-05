@@ -1,5 +1,5 @@
-import { MapPin, Star } from 'lucide-react'
-import { booths } from '../data/mockData'
+import { MapPin, Star, Eye } from 'lucide-react'
+import { booths, floorIntel } from '../data/mockData'
 
 export default function Booths() {
   return (
@@ -9,7 +9,7 @@ export default function Booths() {
         <h1 className="text-2xl font-bold text-text-primary">Booth Hit List</h1>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3 mb-8">
         {booths.map((booth, i) => (
           <div
             key={booth.id}
@@ -47,6 +47,29 @@ export default function Booths() {
             </p>
           </div>
         ))}
+      </div>
+
+      {/* Floor Intel */}
+      <div>
+        <div className="flex items-center gap-2 mb-3">
+          <Eye className="w-4 h-4 text-accent" />
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
+            Floor Intel
+          </h2>
+        </div>
+
+        <div className="space-y-2">
+          {floorIntel.map((item) => (
+            <div
+              key={item.id}
+              className="bg-bg-card border border-surface-border rounded-xl px-4 py-3.5"
+            >
+              <p className="text-sm text-text-secondary leading-relaxed">
+                {item.text}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

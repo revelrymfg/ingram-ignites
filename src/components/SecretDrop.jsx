@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { X, Sparkles, Check } from 'lucide-react'
-import { secretDrop } from '../data/mockData'
 
-export default function SecretDrop({ onDismiss }) {
-  const [spots, setSpots] = useState(secretDrop.spotsRemaining)
+export default function SecretDrop({ drop, onDismiss }) {
+  const [spots, setSpots] = useState(drop.spotsRemaining)
   const [claimed, setClaimed] = useState(false)
 
   useEffect(() => {
@@ -24,6 +23,9 @@ export default function SecretDrop({ onDismiss }) {
     setSpots((s) => Math.max(s - 1, 0))
     setClaimed(true)
   }
+
+  const ctaLabel = drop.ctaLabel || 'Claim Your Spot'
+  const confirmedLabel = drop.confirmedLabel || "You're in — see you tonight ✓"
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-overlay h-dvh">
@@ -46,12 +48,12 @@ export default function SecretDrop({ onDismiss }) {
             Secret Drop
           </p>
 
-          <h2 className="text-2xl font-extrabold text-text-primary leading-tight mb-4">
-            {secretDrop.headline}
+          <h2 className="text-xl font-extrabold text-text-primary leading-tight mb-4">
+            {drop.headline}
           </h2>
 
           <p className="text-text-secondary text-sm mb-6">
-            {secretDrop.subline}
+            {drop.subline}
           </p>
 
           <div className="mb-6">
@@ -66,12 +68,12 @@ export default function SecretDrop({ onDismiss }) {
               onClick={handleClaim}
               className="w-full bg-accent hover:bg-accent-light text-white font-bold py-3.5 min-h-[44px] rounded-xl transition-colors text-sm uppercase tracking-wider"
             >
-              Claim Your Spot
+              {ctaLabel}
             </button>
           ) : (
             <div className="bg-accent/10 border border-accent/30 rounded-xl py-3.5 min-h-[44px] flex items-center justify-center gap-2">
               <Check className="w-4 h-4 text-accent" strokeWidth={3} />
-              <p className="text-accent font-bold text-sm tracking-wide">You're in — see you tonight ✓</p>
+              <p className="text-accent font-bold text-sm tracking-wide">{confirmedLabel}</p>
             </div>
           )}
         </div>

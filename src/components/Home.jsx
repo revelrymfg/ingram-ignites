@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Target, TrendingUp, Hash, ChevronRight, Clock } from 'lucide-react'
-import { user, missions as initialMissions, sessions } from '../data/mockData'
+import { user, missions as initialMissions, sessions, secretDrops } from '../data/mockData'
 import SecretDrop from './SecretDrop'
 
 function getGreeting() {
@@ -12,12 +12,38 @@ function getGreeting() {
 
 export default function Home({ onNavigate }) {
   const [missions, setMissions] = useState(initialMissions)
-  const [showDrop, setShowDrop] = useState(false)
+  const [activeDrop, setActiveDrop] = useState(null)
+  const [dismissedDrops, setDismissedDrops] = useState([])
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowDrop(true), 8000)
-    return () => clearTimeout(timer)
+    const timers = secretDrops.map((drop) => {
+      return setTimeout(() => {
+        setActiveDrop((current) => {
+          if (current) return current
+          return drop
+        })
+      }, drop.delaySeconds * 1000)
+    })
+    return () => timers.forEach(clearTimeout)
   }, [])
+
+  function handleDismissDrop() {
+    if (activeDrop) {
+      setDismissedDrops((prev) => [...prev, activeDrop.id])
+    }
+    setActiveDrop(null)
+    // Check if there's a pending drop that was blocked
+    const nextDrop = secretDrops.find(
+      (d) => !dismissedDrops.includes(d.id) && d.id !== activeDrop?.id
+    )
+    if (nextDrop) {
+      const elapsed = Date.now() - performance.timeOrigin
+      const dropTime = nextDrop.delaySeconds * 1000
+      if (elapsed >= dropTime) {
+        setTimeout(() => setActiveDrop(nextDrop), 500)
+      }
+    }
+  }
 
   function toggleMission(id) {
     setMissions((prev) =>
@@ -126,7 +152,7 @@ export default function Home({ onNavigate }) {
         <p className="text-xs text-text-secondary">{nextSession.time} · {nextSession.location}</p>
       </button>
 
-      {showDrop && <SecretDrop onDismiss={() => setShowDrop(false)} />}
+      {activeDrop && <SecretDrop drop={activeDrop} onDismiss={handleDismissDrop} />}
     </div>
   )
 }
