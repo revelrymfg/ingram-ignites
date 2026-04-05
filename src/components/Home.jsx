@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Target, TrendingUp, Hash, ChevronRight, Clock, Zap } from 'lucide-react'
-import { user, missions as initialMissions, sessions, secretDrops, whyIngram } from '../data/mockData'
+import { user, missions as missionData, sessions, secretDrops, whyIngram } from '../data/mockData'
 import SecretDrop from './SecretDrop'
+import AnimatedCounter from './AnimatedCounter'
 
 function getGreeting() {
   const h = new Date().getHours()
@@ -17,31 +18,32 @@ const challengeLabels = {
   'M365 deployment & licensing': 'M365 deployment',
 }
 
-export default function Home({ onNavigate, challenge }) {
-  const [missions, setMissions] = useState(initialMissions)
+export default function Home({ onNavigate, challenge, gameState }) {
+  const { points, rank, missions, completeMission, claimDrop, claimedDrops } = gameState
   const [activeDrop, setActiveDrop] = useState(null)
   const [dismissedDrops, setDismissedDrops] = useState([])
+  const [checkedAnimId, setCheckedAnimId] = useState(null)
 
   useEffect(() => {
     const timers = secretDrops.map((drop) => {
       return setTimeout(() => {
         setActiveDrop((current) => {
           if (current) return current
+          if (claimedDrops.includes(drop.id)) return current
           return drop
         })
       }, drop.delaySeconds * 1000)
     })
     return () => timers.forEach(clearTimeout)
-  }, [])
+  }, [claimedDrops])
 
   function handleDismissDrop() {
     if (activeDrop) {
       setDismissedDrops((prev) => [...prev, activeDrop.id])
     }
     setActiveDrop(null)
-    // Check if there's a pending drop that was blocked
     const nextDrop = secretDrops.find(
-      (d) => !dismissedDrops.includes(d.id) && d.id !== activeDrop?.id
+      (d) => !dismissedDrops.includes(d.id) && !claimedDrops.includes(d.id) && d.id !== activeDrop?.id
     )
     if (nextDrop) {
       const elapsed = Date.now() - performance.timeOrigin
@@ -52,13 +54,20 @@ export default function Home({ onNavigate, challenge }) {
     }
   }
 
-  function toggleMission(id) {
-    setMissions((prev) =>
-      prev.map((m) => (m.id === id ? { ...m, done: !m.done } : m))
-    )
+  function handleClaimDrop() {
+    if (activeDrop) {
+      claimDrop(activeDrop.id)
+    }
   }
 
-  const completed = missions.filter((m) => m.done).length
+  function handleMissionTap(id) {
+    if (missions[id]) return
+    completeMission(id)
+    setCheckedAnimId(id)
+    setTimeout(() => setCheckedAnimId(null), 300)
+  }
+
+  const completed = Object.values(missions).filter(Boolean).length
   const nextSession = sessions[0]
 
   return (
@@ -79,14 +88,16 @@ export default function Home({ onNavigate, challenge }) {
         <div className="bg-bg-card border border-surface-border rounded-xl px-4 py-3 flex items-center gap-3 min-w-0">
           <TrendingUp className="w-4 h-4 text-accent flex-shrink-0" />
           <div className="min-w-0">
-            <p className="text-lg font-bold text-text-primary">{user.points.toLocaleString()}</p>
+            <p className="text-lg font-bold text-text-primary">
+              <AnimatedCounter value={points} />
+            </p>
             <p className="text-[10px] text-text-muted uppercase tracking-wider">Points</p>
           </div>
         </div>
         <div className="bg-bg-card border border-surface-border rounded-xl px-4 py-3 flex items-center gap-3 min-w-0">
           <Hash className="w-4 h-4 text-accent flex-shrink-0" />
           <div className="min-w-0">
-            <p className="text-lg font-bold text-text-primary">#{user.rank}</p>
+            <p className="text-lg font-bold text-text-primary">#{rank}</p>
             <p className="text-[10px] text-text-muted uppercase tracking-wider">Rank</p>
           </div>
         </div>
@@ -99,38 +110,35 @@ export default function Home({ onNavigate, challenge }) {
           <h2 className="text-sm font-semibold uppercase tracking-wider text-text-secondary">
             Today's Mission
           </h2>
-          <span className="ml-auto text-xs text-text-muted">{completed}/{missions.length}</span>
+          <span className="ml-auto text-xs text-text-muted">{completed}/{missionData.length}</span>
         </div>
 
         <div className="space-y-2">
-          {missions.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => toggleMission(m.id)}
-              className="w-full bg-bg-card border border-surface-border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-colors hover:bg-bg-card-hover"
-            >
-              <div
-                className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
-                  m.done
-                    ? 'bg-accent border-accent'
-                    : 'border-text-muted'
-                }`}
+          {missionData.map((m) => {
+            const done = missions[m.id]
+            return (
+              <button
+                key={m.id}
+                onClick={() => handleMissionTap(m.id)}
+                className={`w-full bg-bg-card border border-surface-border rounded-xl px-4 py-3.5 flex items-center gap-3 text-left transition-colors ${done ? '' : 'hover:bg-bg-card-hover'}`}
               >
-                {m.done && (
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              <span
-                className={`text-sm ${
-                  m.done ? 'text-text-muted line-through' : 'text-text-primary'
-                }`}
-              >
-                {m.text}
-              </span>
-            </button>
-          ))}
+                <div
+                  className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-colors ${
+                    done ? 'bg-accent border-accent' : 'border-text-muted'
+                  } ${checkedAnimId === m.id ? 'animate-check-pop' : ''}`}
+                >
+                  {done && (
+                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span className={`text-sm ${done ? 'text-text-muted line-through' : 'text-text-primary'}`}>
+                  {m.text}
+                </span>
+              </button>
+            )
+          })}
         </div>
       </div>
 
@@ -154,12 +162,12 @@ export default function Home({ onNavigate, challenge }) {
       <div className="bg-bg-card border border-surface-border rounded-xl p-4 mb-4">
         <div className="flex justify-between items-center mb-2">
           <span className="text-xs text-text-muted uppercase tracking-wider">Day 1 Progress</span>
-          <span className="text-xs font-semibold text-accent">{Math.round((completed / missions.length) * 100)}%</span>
+          <span className="text-xs font-semibold text-accent">{Math.round((completed / missionData.length) * 100)}%</span>
         </div>
         <div className="h-1.5 bg-surface-border rounded-full overflow-hidden">
           <div
-            className="h-full bg-accent rounded-full transition-all duration-500"
-            style={{ width: `${(completed / missions.length) * 100}%` }}
+            className="h-full bg-accent rounded-full transition-all duration-300"
+            style={{ width: `${(completed / missionData.length) * 100}%` }}
           />
         </div>
       </div>
@@ -180,7 +188,13 @@ export default function Home({ onNavigate, challenge }) {
         <p className="text-xs text-text-secondary">{nextSession.time} · {nextSession.location}</p>
       </button>
 
-      {activeDrop && <SecretDrop drop={activeDrop} onDismiss={handleDismissDrop} />}
+      {activeDrop && (
+        <SecretDrop
+          drop={activeDrop}
+          onDismiss={handleDismissDrop}
+          onClaim={handleClaimDrop}
+        />
+      )}
     </div>
   )
 }

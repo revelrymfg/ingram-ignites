@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { X, Sparkles, Check } from 'lucide-react'
 
-export default function SecretDrop({ drop, onDismiss }) {
+export default function SecretDrop({ drop, onDismiss, onClaim }) {
   const [spots, setSpots] = useState(drop.spotsRemaining)
   const [claimed, setClaimed] = useState(false)
 
@@ -22,6 +22,7 @@ export default function SecretDrop({ drop, onDismiss }) {
   function handleClaim() {
     setSpots((s) => Math.max(s - 1, 0))
     setClaimed(true)
+    onClaim?.()
   }
 
   const ctaLabel = drop.ctaLabel || 'Claim Your Spot'

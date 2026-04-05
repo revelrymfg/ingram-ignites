@@ -6,6 +6,8 @@ import Home from './components/Home'
 import Schedule from './components/Schedule'
 import Booths from './components/Booths'
 import Leaderboard from './components/Leaderboard'
+import ToastContainer from './components/Toast'
+import useGameState from './hooks/useGameState'
 
 function loadOnboarding() {
   try {
@@ -20,6 +22,7 @@ export default function App() {
   const [entered, setEntered] = useState(false)
   const [onboardingAnswers, setOnboardingAnswers] = useState(loadOnboarding)
   const [activeTab, setActiveTab] = useState('home')
+  const gameState = useGameState()
 
   function handleTabChange(tab) {
     setActiveTab(tab)
@@ -40,10 +43,11 @@ export default function App() {
 
   return (
     <AppShell activeTab={activeTab} onTabChange={handleTabChange}>
-      {activeTab === 'home' && <Home onNavigate={handleTabChange} challenge={onboardingAnswers[0]} />}
+      {activeTab === 'home' && <Home onNavigate={handleTabChange} challenge={onboardingAnswers[0]} gameState={gameState} />}
       {activeTab === 'schedule' && <Schedule />}
-      {activeTab === 'booths' && <Booths />}
-      {activeTab === 'leaderboard' && <Leaderboard />}
+      {activeTab === 'booths' && <Booths gameState={gameState} />}
+      {activeTab === 'leaderboard' && <Leaderboard gameState={gameState} />}
+      <ToastContainer toasts={gameState.toasts} />
     </AppShell>
   )
 }
