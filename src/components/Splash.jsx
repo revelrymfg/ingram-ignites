@@ -1,35 +1,42 @@
-import { Zap } from 'lucide-react'
-
 export default function Splash({ onEnter }) {
   return (
     <div
       className="h-dvh flex flex-col items-center justify-center px-6 cursor-pointer overflow-hidden"
+      style={{ background: '#0066CC' }}
       onClick={onEnter}
     >
       <div className="animate-fade-in flex flex-col items-center text-center">
-        <div className="w-20 h-20 rounded-2xl bg-accent/20 flex items-center justify-center mb-8">
-          <Zap className="w-10 h-10 text-accent" strokeWidth={2.5} />
-        </div>
-
-        <h1 className="text-4xl font-extrabold tracking-tight text-text-primary mb-2">
-          Ingram <span className="text-accent">Ignites</span>
+        {/* Ingram Micro wordmark */}
+        <h1 className="text-[42px] leading-tight mb-5" style={{ letterSpacing: '0.05em' }}>
+          <span className="text-white font-light">ingram </span>
+          <span className="text-white font-semibold">micro</span>
         </h1>
 
-        <p className="text-text-secondary text-base mb-10 max-w-xs">
-          Your unfair advantage at Microsoft Ignite
+        {/* Divider + sub-brand */}
+        <div className="w-10 border-t border-white/40 mb-4" />
+        <p className="text-white text-[28px] font-light mb-10" style={{ letterSpacing: '0.15em' }}>
+          Ignites
         </p>
 
-        <div className="border border-surface-border rounded-xl px-6 py-4 mb-8 w-full max-w-xs">
-          <p className="text-text-muted text-xs uppercase tracking-widest mb-1">Entering as</p>
-          <p className="text-text-primary font-semibold text-lg">Jordan Mercer</p>
-          <p className="text-text-secondary text-sm">Director of IT, Pacific Mutual</p>
+        {/* Tagline */}
+        <p className="text-white/85 text-base font-light mb-12">
+          Your Microsoft strategy, personalized.
+        </p>
+
+        {/* Entering as card */}
+        <div className="bg-white/10 border border-white/20 rounded-xl px-6 py-4 mb-8 w-full max-w-xs backdrop-blur-sm">
+          <p className="text-white/50 text-xs uppercase tracking-widest mb-1">Entering as</p>
+          <p className="text-white font-semibold text-lg">Jordan Mercer</p>
+          <p className="text-white/70 text-sm">Director of IT, Pacific Mutual</p>
         </div>
 
-        <p className="text-text-muted text-sm animate-pulse mb-10">Tap anywhere to enter</p>
+        {/* Tap to enter */}
+        <p className="text-white/60 text-[13px] animate-pulse mb-12">Tap anywhere to enter</p>
 
+        {/* Powered by */}
         <div className="flex flex-col items-center gap-2">
-          <div className="w-8 border-t border-surface-border" />
-          <p className="text-text-muted/50 text-[11px] tracking-wide">Powered by Starch</p>
+          <div className="w-8 border-t border-white/30" />
+          <p className="text-white/40 text-[11px] tracking-wide">Powered by Starch</p>
         </div>
       </div>
     </div>
