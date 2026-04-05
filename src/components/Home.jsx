@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Target, TrendingUp, Hash, ChevronRight, Clock } from 'lucide-react'
-import { user, missions as initialMissions, sessions, secretDrops } from '../data/mockData'
+import { Target, TrendingUp, Hash, ChevronRight, Clock, Zap } from 'lucide-react'
+import { user, missions as initialMissions, sessions, secretDrops, whyIngram } from '../data/mockData'
 import SecretDrop from './SecretDrop'
 
 function getGreeting() {
@@ -120,6 +120,22 @@ export default function Home({ onNavigate }) {
             </button>
           ))}
         </div>
+      </div>
+
+      {/* Why Ingram */}
+      <div className="bg-bg-card border border-surface-border rounded-xl p-4 mb-4">
+        <div className="flex items-center gap-2 mb-2.5">
+          <Zap className="w-3.5 h-3.5 text-accent" />
+          <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">Why Ingram at Ignite?</span>
+        </div>
+        <ul className="space-y-1.5">
+          {whyIngram.map((item, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
+              <span className="text-accent mt-0.5">·</span>
+              {item}
+            </li>
+          ))}
+        </ul>
       </div>
 
       {/* Progress bar */}

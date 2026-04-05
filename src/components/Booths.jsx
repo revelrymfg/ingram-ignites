@@ -33,12 +33,21 @@ export default function Booths() {
               <span className="text-xs text-text-muted font-medium">#{i + 1}</span>
             </div>
 
-            {booth.badge && (
-              <div className="flex items-center gap-1.5 mb-3">
-                <Star className="w-3 h-3 text-accent" fill="currentColor" />
-                <span className="text-xs font-semibold text-accent uppercase tracking-wider">
-                  {booth.badge}
-                </span>
+            {(booth.badge || booth.badge2) && (
+              <div className="flex items-center gap-3 mb-3 flex-wrap">
+                {booth.badge && (
+                  <div className="flex items-center gap-1.5">
+                    <Star className="w-3 h-3 text-accent" fill="currentColor" />
+                    <span className="text-xs font-semibold text-accent uppercase tracking-wider">
+                      {booth.badge}
+                    </span>
+                  </div>
+                )}
+                {booth.badge2 && (
+                  <span className="text-[10px] font-semibold text-amber-400 uppercase tracking-wider bg-amber-400/10 border border-amber-400/20 px-2 py-0.5 rounded-md">
+                    {booth.badge2}
+                  </span>
+                )}
               </div>
             )}
 

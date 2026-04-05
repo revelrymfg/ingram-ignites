@@ -14,6 +14,12 @@ export const missions = [
   { id: 3, text: 'Scan 3 partner booths for cost optimization intel', done: false },
 ]
 
+export const whyIngram = [
+  '#1 Microsoft distributor globally',
+  'Azure, Dynamics, M365, Copilot — fully stacked',
+  'One partner from licensing to deployment to support',
+]
+
 export const sessions = [
   {
     id: 1,
@@ -22,7 +28,7 @@ export const sessions = [
     location: 'Hall B, Room 210',
     speaker: 'Sarah Chen, Microsoft',
     priority: 'critical',
-    why: 'Pacific Mutual is mid-migration and evaluating Copilot for compliance workflows — this session covers the exact guardrails your CISO asked about.',
+    why: 'Pacific Mutual is evaluating Copilot for compliance workflows. Ingram is a top Microsoft distributor — they can bundle licensing, implementation, and ongoing support in one conversation at Booth 1200.',
   },
   {
     id: 2,
@@ -31,16 +37,16 @@ export const sessions = [
     location: 'Hall A, Room 104',
     speaker: 'Marcus Webb, Ingram Micro',
     priority: 'high',
-    why: 'Your Ingram rep Marcus is on this panel. With your hybrid environment, his cost optimization frameworks are directly applicable to your Azure spend.',
+    why: 'Ingram\'s practice lead Marcus Webb is on this panel. He\'ll cover the exact cost framework Pacific Mutual is mid-deployment on. This is your warm intro before you hit the booth.',
   },
   {
     id: 3,
-    title: 'M365 Copilot Hands-On Lab',
+    title: 'M365 Copilot for IT Teams',
     time: '2:00 PM – 3:30 PM',
     location: 'Innovation Hub, Lab 3',
     speaker: 'Priya Sharma, Microsoft',
     priority: 'medium',
-    why: 'Hands-on time with the M365 Copilot API — bring your laptop. You\'ll leave with a working prototype for your team.',
+    why: 'Ingram distributes the full M365 stack. If you like what you see here, Marcus can scope a deployment and licensing package in 15 minutes at Booth 1200.',
   },
 ]
 
@@ -50,7 +56,8 @@ export const booths = [
     number: '1200',
     name: 'Ingram Micro',
     badge: 'Your rep is here',
-    context: 'Large 40x40 island booth facing the Microsoft Marketplace. Walk the heritage timeline walls, charge your devices at the center kiosks, and hit the live Azure demo stations. Marcus Webb is expecting you — ask him to run the cost analysis tool on your current cloud spend.',
+    badge2: 'Consultation Station',
+    context: 'Marcus Webb is running the Consultation Station — a one-on-one session where he\'ll assess your current Microsoft stack and show you what\'s leaving money on the table. He has Dell AI PCs, HP, and Surface running live demos. Also ask about XVantage — Ingram\'s platform that manages your entire Microsoft licensing in one place. Bring your Azure cost report.',
   },
   {
     id: 2,
@@ -71,11 +78,15 @@ export const booths = [
 export const floorIntel = [
   {
     id: 1,
-    text: 'PAX8 is making a big presence this year — Ingram\'s team has a counter-story ready. Ask Marcus about it at Booth 1200.',
+    text: 'Ingram is Microsoft\'s top global distributor — they move more Azure, M365, and Copilot than anyone. That means better pricing, faster deployment, and one partner who owns the whole thing.',
   },
   {
     id: 2,
-    text: 'Microsoft Marketplace is right next to the Ingram booth — perfect for back-to-back conversations.',
+    text: 'Microsoft Marketplace booth is right next to Ingram at Booth 1200 — ideal for back-to-back conversations so you can hear the product story and the procurement path in one pass.',
+  },
+  {
+    id: 3,
+    text: 'The Consultation Station at Booth 1200 is a 15-minute working session — not a sales pitch. Marcus will look at your actual stack and tell you what\'s costing you money.',
   },
 ]
 
@@ -91,17 +102,17 @@ export const secretDrops = [
   {
     id: 'rooftop',
     headline: 'Private rooftop. Tonight. You\'re in.',
-    subline: 'Exclusive Ingram Micro reception — top connectors only.',
+    subline: 'Ingram\'s invite-only reception — top Microsoft partners and IT decision-makers only. Open bar, no agenda, no sales pitch. Just the people you actually want to meet. 12 spots left.',
     spotsRemaining: 12,
     delaySeconds: 8,
   },
   {
-    id: 'azure-tool',
-    headline: 'Azure cost analysis tool — live at Booth 1200.',
-    subline: 'Ingram\'s team will run a 10-min analysis of your current cloud spend. First 15 companies only.',
-    spotsRemaining: 15,
+    id: 'stack-assessment',
+    headline: 'Free Microsoft stack assessment. Right now.',
+    subline: 'Ingram\'s team at Booth 1200 will run a live 10-minute analysis of your Microsoft licensing — find gaps, flag savings, and tell you exactly what PAX8 won\'t. First 8 slots today.',
+    spotsRemaining: 8,
     delaySeconds: 30,
-    ctaLabel: 'Book Your Slot',
-    confirmedLabel: 'Slot booked — see you at Booth 1200 ✓',
+    ctaLabel: 'Reserve Your Slot',
+    confirmedLabel: 'Slot reserved — head to Booth 1200 ✓',
   },
 ]
