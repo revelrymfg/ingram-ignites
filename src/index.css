@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0A0A0A;
+  --color-bg-card: #111111;
+  --color-bg-card-hover: #161616;
+
+  --color-text-primary: #F5F5F5;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #52525B;
+
+  --color-accent: #0066CC;
+  --color-accent-light: #3388DD;
+  --color-accent-dim: rgba(0, 102, 204, 0.15);
+
+  --color-surface-border: #1E1E1E;
+
+  --color-gold: #FFD700;
+  --color-silver: #C0C0C0;
+  --color-bronze: #CD7F32;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    min-height: 100dvh;
+    margin: 0;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+  }
+  #root {
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 102, 204, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(0, 102, 204, 0.6); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes count-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.animate-count-pulse {
+  animation: count-pulse 1s ease-in-out infinite;
+}
+
+@keyframes rank-slide {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.animate-rank-slide {
+  animation: rank-slide 0.4s ease-out forwards;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-overlay {
+  animation: overlay-in 0.3s ease-out forwards;
+}
