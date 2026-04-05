@@ -36,17 +36,17 @@ export default function Home() {
       </div>
 
       {/* Quick Stats */}
-      <div className="flex gap-3 mb-6">
-        <div className="flex-1 bg-bg-card border border-surface-border rounded-xl px-4 py-3 flex items-center gap-3">
-          <TrendingUp className="w-4 h-4 text-accent" />
-          <div>
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="bg-bg-card border border-surface-border rounded-xl px-4 py-3 flex items-center gap-3 min-w-0">
+          <TrendingUp className="w-4 h-4 text-accent flex-shrink-0" />
+          <div className="min-w-0">
             <p className="text-lg font-bold text-text-primary">{user.points.toLocaleString()}</p>
             <p className="text-[10px] text-text-muted uppercase tracking-wider">Points</p>
           </div>
         </div>
-        <div className="flex-1 bg-bg-card border border-surface-border rounded-xl px-4 py-3 flex items-center gap-3">
-          <Hash className="w-4 h-4 text-accent" />
-          <div>
+        <div className="bg-bg-card border border-surface-border rounded-xl px-4 py-3 flex items-center gap-3 min-w-0">
+          <Hash className="w-4 h-4 text-accent flex-shrink-0" />
+          <div className="min-w-0">
             <p className="text-lg font-bold text-text-primary">#{user.rank}</p>
             <p className="text-[10px] text-text-muted uppercase tracking-wider">Rank</p>
           </div>

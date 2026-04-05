@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, Sparkles } from 'lucide-react'
+import { X, Sparkles, Check } from 'lucide-react'
 import { secretDrop } from '../data/mockData'
 
 export default function SecretDrop({ onDismiss }) {
@@ -13,6 +13,16 @@ export default function SecretDrop({ onDismiss }) {
     }, 5000)
     return () => clearInterval(interval)
   }, [claimed])
+
+  useEffect(() => {
+    if (!claimed) return
+    const timer = setTimeout(onDismiss, 2000)
+    return () => clearTimeout(timer)
+  }, [claimed, onDismiss])
+
+  function handleClaim() {
+    setClaimed(true)
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center animate-overlay h-dvh">
@@ -52,14 +62,15 @@ export default function SecretDrop({ onDismiss }) {
 
           {!claimed ? (
             <button
-              onClick={() => setClaimed(true)}
+              onClick={handleClaim}
               className="w-full bg-accent hover:bg-accent-light text-white font-bold py-3.5 min-h-[44px] rounded-xl transition-colors text-sm uppercase tracking-wider"
             >
               Claim Your Spot
             </button>
           ) : (
-            <div className="bg-accent/10 border border-accent/30 rounded-xl py-3.5 min-h-[44px] flex items-center justify-center">
-              <p className="text-accent font-bold text-sm uppercase tracking-wider">You're in ✓</p>
+            <div className="bg-accent/10 border border-accent/30 rounded-xl py-3.5 min-h-[44px] flex items-center justify-center gap-2">
+              <Check className="w-4 h-4 text-accent" strokeWidth={3} />
+              <p className="text-accent font-bold text-sm tracking-wide">You're in — see you tonight</p>
             </div>
           )}
         </div>
