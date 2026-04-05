@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Target, TrendingUp, Hash } from 'lucide-react'
-import { user, missions as initialMissions } from '../data/mockData'
+import { Target, TrendingUp, Hash, ChevronRight, Clock } from 'lucide-react'
+import { user, missions as initialMissions, sessions } from '../data/mockData'
 import SecretDrop from './SecretDrop'
 
 function getGreeting() {
@@ -10,7 +10,7 @@ function getGreeting() {
   return 'Good evening'
 }
 
-export default function Home() {
+export default function Home({ onNavigate }) {
   const [missions, setMissions] = useState(initialMissions)
   const [showDrop, setShowDrop] = useState(false)
 
@@ -26,6 +26,7 @@ export default function Home() {
   }
 
   const completed = missions.filter((m) => m.done).length
+  const nextSession = sessions[0]
 
   return (
     <div className="animate-fade-in">
@@ -96,7 +97,7 @@ export default function Home() {
       </div>
 
       {/* Progress bar */}
-      <div className="bg-bg-card border border-surface-border rounded-xl p-4">
+      <div className="bg-bg-card border border-surface-border rounded-xl p-4 mb-4">
         <div className="flex justify-between items-center mb-2">
           <span className="text-xs text-text-muted uppercase tracking-wider">Day 1 Progress</span>
           <span className="text-xs font-semibold text-accent">{Math.round((completed / missions.length) * 100)}%</span>
@@ -108,6 +109,22 @@ export default function Home() {
           />
         </div>
       </div>
+
+      {/* Up Next */}
+      <button
+        onClick={() => onNavigate?.('schedule')}
+        className="w-full bg-bg-card border border-surface-border rounded-xl p-4 text-left hover:bg-bg-card-hover transition-colors"
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <Clock className="w-3.5 h-3.5 text-accent" />
+            <span className="text-xs text-text-muted uppercase tracking-wider font-semibold">Up Next</span>
+          </div>
+          <ChevronRight className="w-4 h-4 text-text-muted" />
+        </div>
+        <p className="text-sm font-semibold text-text-primary mb-1">{nextSession.title}</p>
+        <p className="text-xs text-text-secondary">{nextSession.time} · {nextSession.location}</p>
+      </button>
 
       {showDrop && <SecretDrop onDismiss={() => setShowDrop(false)} />}
     </div>

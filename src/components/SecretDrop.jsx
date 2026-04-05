@@ -21,6 +21,7 @@ export default function SecretDrop({ onDismiss }) {
   }, [claimed, onDismiss])
 
   function handleClaim() {
+    setSpots((s) => Math.max(s - 1, 0))
     setClaimed(true)
   }
 
@@ -29,7 +30,7 @@ export default function SecretDrop({ onDismiss }) {
       <div className="absolute inset-0 bg-black/90" onClick={onDismiss} />
 
       <div className="relative z-10 mx-4 w-full max-w-sm animate-slide-up">
-        <div className="bg-bg-card border border-accent/30 rounded-2xl px-5 py-6 text-center animate-pulse-glow">
+        <div className="bg-bg-card border border-surface-border rounded-2xl px-5 py-6 text-center">
           <button
             onClick={onDismiss}
             className="absolute top-3 right-3 w-11 h-11 flex items-center justify-center text-text-muted hover:text-text-primary"
@@ -54,7 +55,7 @@ export default function SecretDrop({ onDismiss }) {
           </p>
 
           <div className="mb-6">
-            <span className={`text-3xl font-extrabold ${spots <= 3 ? 'text-red-500 animate-count-pulse' : 'text-accent'}`}>
+            <span className={`text-3xl font-extrabold transition-all duration-300 ${spots <= 3 ? 'text-red-500 animate-count-pulse' : 'text-accent'}`}>
               {spots}
             </span>
             <p className="text-text-muted text-xs uppercase tracking-wider mt-1">spots remaining</p>
@@ -70,7 +71,7 @@ export default function SecretDrop({ onDismiss }) {
           ) : (
             <div className="bg-accent/10 border border-accent/30 rounded-xl py-3.5 min-h-[44px] flex items-center justify-center gap-2">
               <Check className="w-4 h-4 text-accent" strokeWidth={3} />
-              <p className="text-accent font-bold text-sm tracking-wide">You're in — see you tonight</p>
+              <p className="text-accent font-bold text-sm tracking-wide">You're in — see you tonight ✓</p>
             </div>
           )}
         </div>

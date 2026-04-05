@@ -21,7 +21,7 @@ export default function App() {
 
   return (
     <AppShell activeTab={activeTab} onTabChange={handleTabChange}>
-      {activeTab === 'home' && <Home />}
+      {activeTab === 'home' && <Home onNavigate={handleTabChange} />}
       {activeTab === 'schedule' && <Schedule />}
       {activeTab === 'booths' && <Booths />}
       {activeTab === 'leaderboard' && <Leaderboard />}
