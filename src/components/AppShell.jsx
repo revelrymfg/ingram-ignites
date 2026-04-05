@@ -33,7 +33,14 @@ export default function AppShell({ activeTab, onTabChange, children }) {
             )
           })}
         </div>
-        <p className="text-center text-text-muted/40 text-[9px] tracking-wide pb-1">Powered by Starch</p>
+        <div className="flex items-center justify-center gap-1.5 pb-1">
+          <span className="text-text-muted/40 text-[9px]">Powered by</span>
+          <img
+            src="/ingram-ignites/starch-logo.png"
+            alt="Starch"
+            style={{ height: '10px', opacity: 0.25 }}
+          />
+        </div>
       </nav>
     </div>
   )

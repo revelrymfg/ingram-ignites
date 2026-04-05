@@ -38,7 +38,14 @@ export default function Splash({ onEnter }) {
         {/* Powered by */}
         <div className="flex flex-col items-center gap-2">
           <div className="w-8 border-t border-white/30" />
-          <p className="text-white/40 text-[11px] tracking-wide">Powered by Starch</p>
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-white/40 text-[11px]">Powered by</span>
+            <img
+              src="/ingram-ignites/starch-logo.png"
+              alt="Starch"
+              style={{ height: '14px', filter: 'brightness(0) invert(1)', opacity: 0.5 }}
+            />
+          </div>
         </div>
       </div>
     </div>
