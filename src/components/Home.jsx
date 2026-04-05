@@ -10,7 +10,14 @@ function getGreeting() {
   return 'Good evening'
 }
 
-export default function Home({ onNavigate }) {
+const challengeLabels = {
+  'Controlling Azure costs': 'Azure cost optimization',
+  'Security & compliance gaps': 'security & compliance',
+  'Rolling out AI / Copilot': 'Copilot adoption',
+  'M365 deployment & licensing': 'M365 deployment',
+}
+
+export default function Home({ onNavigate, challenge }) {
   const [missions, setMissions] = useState(initialMissions)
   const [activeDrop, setActiveDrop] = useState(null)
   const [dismissedDrops, setDismissedDrops] = useState([])
@@ -60,6 +67,11 @@ export default function Home({ onNavigate }) {
       <div className="mb-6 pt-2">
         <p className="text-text-muted text-sm">{getGreeting()},</p>
         <h1 className="text-2xl font-bold text-text-primary">{user.name}</h1>
+        {challenge && (
+          <p className="text-xs text-text-muted mt-1">
+            Briefing personalized for {challengeLabels[challenge] || challenge.toLowerCase()}
+          </p>
+        )}
       </div>
 
       {/* Quick Stats */}
